@@ -1,0 +1,11 @@
+#showtooltip Prospecting
+/cast Prospecting
+/use Copper Ore
+/use Tin Ore
+/usee Iron Ore
+/use Mithril Ore
+/use Thorium Ore
+/use Fel Iron Ore
+/use Adamantite Ore
+/use Cobalt Ore
+/use Saronite Ore

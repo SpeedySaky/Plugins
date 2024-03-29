@@ -1,0 +1,59 @@
+Macro name:
+Milling
+
+Macro text:
+
+#showtooltip Milling
+/cast Milling
+/use Earthroot
+/use Peacebloom
+/use Silverleaf
+/use Briarthorn
+/use Bruiseweed
+/use Mageroyal
+/use Stranglekelp
+/use Swiftthistle
+/use Grave Moss
+/use Kingsblood
+/use Liferoot
+/use Wild Steelbloom
+/use Fadeleaf
+
+
+Macro name:
+Milling2
+
+Macro text:
+#showtooltip Milling
+/cast Milling
+/use Goldthorn
+/use Khadgar's Whisker
+/use Wintersbite
+/use Arthas' Tears
+/use Blindweed
+/use Firebloom
+/use Ghost Mushroom
+/use Gromsblood
+/use Purple Lotus
+/use Sungrass
+/use Dreamfoil
+/use Golden Sansam
+/use Icecap
+
+
+Macro name:
+Milling3
+
+Macro text
+#showtooltip Milling
+/cast Milling
+/use Mountain Silversage
+/use Plaguebloom
+/use Felweed
+/use Ragveil
+/use Terocone
+/use Ancient Lichen
+/use Nightmare Vine
+/use Netherbloom
+/use Mana Thistle
+/use Dreaming Glory
