@@ -40,7 +40,7 @@ function SkinNearbyMobs()
     local skinnableUnits = {}
 
     foreach Unit in Units do
-        if (Unit.Health == 0) and (IsUnitValid(Unit)== true) and (IsUnitSkinnable(Unit) == true) then
+        if (Unit.Health == 0) and (IsUnitValid(Unit)== true)  then
             local distance = DistanceToUnit(Player,Unit)
             table.insert(skinnableUnits, {unit=Unit, distance=distance})
         end;         
