@@ -16,11 +16,11 @@ UseLure = true;  --- Set this to TRUE if you want the BOT to apply a lure to the
 
 
 
-local enchants = {"+25 Fishing", "+50 Fishing", "+75 Fishing", "+100 Fishing"}
+local enchants = {"+25 Fishing", "+50 Fishing", "+75 Fishing", "+100 Fishing", }
 local hasEnchant = false
 
 for _, enchant in ipairs(enchants) do
-    if ItemHasEnch(15, "Fishing Lure (" .. enchant .. " Skill)") then
+    if ItemHasEnch(16, "Fishing Lure (" .. enchant .. " Skill)") then
         hasEnchant = true
         break
     end
