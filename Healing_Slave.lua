@@ -6,12 +6,12 @@ Player = GetPlayer();  -- Returns the current Player wUnit;
 Units = GetUnitsList(); -- returns a list of all current wUnits (includes players).
 Players = GetPlayersList(); -- returns a list of all current players.
 
-MasterName = "Sullfir"; -- You would change this to the name of your master char!
+MasterName = "Naxcu"; -- You would change this to the name of your master char!
 YardsBehindMaster = 15 --- This is how many yards behind the master the slave must stay!
 YardsToHealUnits = 30 --- This is how many yards away from the player the BOT will target other players to heal.
 
 function FindMaster()
-   FoundMaster = FindPlayerByName(MasterName);
+   FoundMaster = FindUnitByName(MasterName);
 end
 
 function DistanceOfMeshToMaster()
@@ -61,9 +61,7 @@ foreach Unit in Players do  -- Loop through every object near the player
 
 
 if IsUnitValid(HealTarget) then   -- checking to see if our Unit is valid before anything else.
-	TargetUnit(HealTarget);   --- Targeting the unit.
-	Log("Targeting "..HealTarget.Name);  --- Logging.
-
+	TargetUnit(HealTarget);   --- Targeting the unit.	
 	-- --- More Healing Logic would go here
 end
 
@@ -76,7 +74,7 @@ end
 
 if IsUnitValid(FoundMaster) then   -- checking to see if our Unit is valid before anything else.	  	
 
-	   if (GetBOTState() == "Pathing" or GetBOTState() == "Idle") and DistanceToUnit(Player,FoundMaster) > YardsBehindMaster then  --- checking our bot state then checking if we are more than YardsBehindMaster yards from our master if we are we generate a path to him.
+	   if (GetBOTState() == "Pathing" or GetBOTState() == "Idle" or GetBOTState() == "UpdateQuestState") and DistanceToUnit(Player,FoundMaster) > YardsBehindMaster then  --- checking our bot state then checking if we are more than YardsBehindMaster yards from our master if we are we generate a path to him.
 		 FindMeshPathToUnit(FoundMaster);       -- Generating a path to our master.
 		 SetBOTState("PathingToMaster");    --- Setting our state so we dont spam.
 	   end;

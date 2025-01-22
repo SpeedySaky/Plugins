@@ -1,25 +1,17 @@
 ThreadSpeed = 50;--- How long the thread will sleep after every tick
 Owner = "MrFade";  ---Declaring the owner of this plugin
-Name = "Dps_Slave";  --- Plugin Name
+Name = "Healing BOT";  --- Plugin Name
 
 Player = GetPlayer();  -- Returns the current Player wUnit;
 Units = GetUnitsList(); -- returns a list of all current wUnits (includes players).
 Players = GetPlayersList(); -- returns a list of all current players.
 
-MasterName = "Xhael"; -- You would change this to the name of your master char!
-YardsBehindMaster = 3 --- This is how many yards behind the master the slave must stay!
+MasterName = "Naxcu"; -- You would change this to the name of your master char!
+YardsBehindMaster = 15 --- This is how many yards behind the master the slave must stay!
+YardsToHealUnits = 30 --- This is how many yards away from the player the BOT will target other players to heal.
 
 function FindMaster()
-
-FoundMaster = FindPlayerByName(MasterName);
-    -- This is outdated FindPlayerByName is far cleaner!
-	--foreach PlayersAround in Players do  -- Loop through every object near the player	 
-	--	if GetUnitReaction(Player,PlayersAround) == 5  then  --- we are checking to see that each playerAround is friendly to the player.
-	--	  if PlayersAround.Name == MasterName then --- Checking to see what player matches our masters name then saving that wUnit.
-	--	   FoundMaster = PlayersAround;
-	--	  end
-	--	end;
-	--end;
+   FoundMaster = GetPartyTank();
 end
 
 function DistanceOfMeshToMaster()
@@ -39,6 +31,9 @@ Log("No path yet...");
 end
 
 
+
+
+--Log("Current Point : "..CurrentPathSize);
 MyVecFloatArray = VecToFloatArray(CurrentPath[CurrentPathSize-1]);
 FoundMasterFloatArray = UnitPosToFloatArray(FoundMaster);
 Distance = DistanceBetweenPoints(FoundMasterFloatArray,MyVecFloatArray);
@@ -48,22 +43,38 @@ end
 
 
 
-if IsUnitValid(FoundMaster) then
 
 
-    if FoundMaster.TargetGuid.IsEmpty() ~= true and CompareGUID(Player.TargetGuid, FoundMaster.TargetGuid) == false then
-	  Log("Targeting master target");
-	   TargetUnit(FindUnitByGUID(FoundMaster.TargetGuid));
-	end
-	
+
+Max = 100;
+foreach Unit in Players do  -- Loop through every object near the player
+ 
+     if GetUnitReaction(Unit,Player) == 4 and DistanceToUnit(Player,Unit) < YardsToHealUnits  then  --- we are checking to see that each unit is friendly to the player.
+	   if Unit.HealthPercent < Max and Unit.IsDead() ~= true then    --- Checking to see the current units health is less than our last.
+	      Max = Unit.HealthPercent;
+	     HealTarget = Unit;  --- Storing the lowest unit health.
+	    end;
+	 end;
+		
+ end;
+
+
+
+if IsUnitValid(HealTarget) then   -- checking to see if our Unit is valid before anything else.
+	TargetUnit(HealTarget);   --- Targeting the unit.	
+	-- --- More Healing Logic would go here
 end
+
+
+
+
 
 
 
 
 if IsUnitValid(FoundMaster) then   -- checking to see if our Unit is valid before anything else.	  	
 
-	   if (GetBOTState() == "Pathing" or GetBOTState() == "Idle") and DistanceToUnit(Player,FoundMaster) > YardsBehindMaster then  --- checking our bot state then checking if we are more than YardsBehindMaster yards from our master if we are we generate a path to him.
+	   if (GetBOTState() == "Pathing" or GetBOTState() == "Idle" or GetBOTState() == "UpdateQuestState") and DistanceToUnit(Player,FoundMaster) > YardsBehindMaster then  --- checking our bot state then checking if we are more than YardsBehindMaster yards from our master if we are we generate a path to him.
 		 FindMeshPathToUnit(FoundMaster);       -- Generating a path to our master.
 		 SetBOTState("PathingToMaster");    --- Setting our state so we dont spam.
 	   end;
@@ -96,3 +107,13 @@ else
 Log("Looking for master");
 FindMaster();   --- Call FindMaster to rescan for our master.
 end
+
+
+
+
+
+
+
+
+
+---- This is a basic example of a healing BOT written entirely in our API.
