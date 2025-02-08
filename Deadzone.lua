@@ -1,4 +1,4 @@
-ThreadSpeed = 1000; -- Set the thread speed to 1000 milliseconds (1 second)
+ThreadSpeed = 10000; -- Set the thread speed to 1000 milliseconds (1 second)
 Owner = "SpeedySaky";
 Name = "Deadzone";
 Player = GetPlayer();
@@ -32,7 +32,7 @@ function GetPlayerAndTargetLocation()
         Log("Distance to Target: " .. distance);
 
         -- If the distance is less than 7 yards, move the player to a position more than 15 yards away
-        if distance < 7 then
+        if distance <= 11 and not isMoving then
             local directionX = playerPosition[1] - targetPosition[1];
             local directionY = playerPosition[2] - targetPosition[2];
             local magnitude = math.sqrt(directionX * directionX + directionY * directionY);
@@ -46,11 +46,12 @@ function GetPlayerAndTargetLocation()
             if FindMeshPathToPoint(newX, newY, newZ) then
                 Log("Path found, moving player.");
                 isMoving = true;
-                Path(); -- Ensure the Path function is called to move the player
+                -- Simulate key press to move the player backward
+                SendKey(0x28, 2000); -- 0x28 is the virtual key code for the down arrow key
             else
                 Log("Failed to find path to new position.");
             end
-        elseif distance >= 15 then
+        elseif distance >= 20 then
             Log("Target is more than 15 yards away, stopping movement.");
             isMoving = false;
             targetPosition = nil;
@@ -87,7 +88,8 @@ function CheckIfPlayerReachedTarget()
             Log("Moving player to new position: X=" .. newX .. " Y=" .. newY .. " Z=" .. newZ);
             if FindMeshPathToPoint(newX, newY, newZ) then
                 Log("Path found, moving player.");
-                Path(); -- Ensure the Path function is called to move the player
+                -- Simulate key press to move the player backward
+                SendKey(0x28, 1000); -- 0x28 is the virtual key code for the down arrow key
             else
                 Log("Failed to find path to new position.");
             end
@@ -102,5 +104,7 @@ while true do
     if isMoving then
         CheckIfPlayerReachedTarget();
     end
-    Sleep(5000); -- Adjusted to 1 second for more frequent checks
+Sleep(ThreadSpeed);
 end
+
+
